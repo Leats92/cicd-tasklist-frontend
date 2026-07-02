@@ -29,10 +29,9 @@ describe('App', () => {
     expect(screen.getByText('Mes Tâches')).toBeInTheDocument()
   })
 
-  it('affiche les statistiques à zéro quand aucune tâche', () => {
+  it('n\'affiche pas les statistiques quand aucune tâche', () => {
     render(<App />)
-    const zeros = screen.getAllByText('0')
-    expect(zeros.length).toBeGreaterThanOrEqual(1)
+    expect(screen.queryByText('Total')).not.toBeInTheDocument()
   })
 
   it('calcule correctement le total et les tâches terminées', () => {
@@ -46,8 +45,10 @@ describe('App', () => {
 
     render(<App />)
 
-    expect(screen.getByText('2')).toBeInTheDocument()
-    expect(screen.getByText('1')).toBeInTheDocument()
+    expect(screen.getByText('Total')).toBeInTheDocument()
+    expect(screen.getByText('Terminées')).toBeInTheDocument()
+    const statValues = screen.getAllByText('1')
+    expect(statValues.length).toBeGreaterThanOrEqual(1)
   })
 
   it('affiche l\'état de chargement', () => {
